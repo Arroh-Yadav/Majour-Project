@@ -18,4 +18,4 @@ const initDB = async () => {
   console.log("Data was initiallized.");
 };
 
-initDB();
+// initDB();//here i used it to initialize the data

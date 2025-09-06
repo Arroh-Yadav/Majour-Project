@@ -18,6 +18,7 @@
             class="form-control"
             required
           />
+          <div class="valid-feedback">Title looks good!</div>
         </div>
 
         <div class="mb-3">
@@ -27,6 +28,7 @@
             class="form-control"
             required
           ></textarea>
+          <div class="invalid-feedback">Please enter a short description.</div>
         </div>
         <div class="mb-3">
           <label for="image" class="form-label">Image Link</label>
@@ -36,6 +38,7 @@
             type="text"
             class="form-control"
           />
+          <div class="invalid-feedback">Image url/Link should be valid!</div>
         </div>
 
         <div class="row">
@@ -44,10 +47,10 @@
             <input
               placeholder="1500"
               name="Listing[price]"
-              type="text"
               class="form-control"
               required
             />
+            <div class="invalid-feedback">Price should be valid!</div>
           </div>
 
           <div class="mb-3 col-md-8">
@@ -59,6 +62,7 @@
               class="form-control"
               required
             />
+            <div class="invalid-feedback">Country name should be valid!</div>
           </div>
         </div>
         <div class="mb-3">
@@ -70,6 +74,7 @@
             class="form-control"
             required
           />
+          <div class="invalid-feedback">Location should be valid!</div>
         </div>
         <button class="btn btn-dark add-btn">Add</button>
         <br /><br />
