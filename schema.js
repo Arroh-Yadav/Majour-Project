@@ -1,0 +1,16 @@
+//Validation for schema so that it'll not recieve any kind of data even from backend
+
+const joi = require("joi");
+
+module.exports.listingSchema = joi.object({
+  Listing: joi
+    .object({
+      title: joi.string().required(),
+      description: joi.string().required(),
+      location: joi.string().required(),
+      country: joi.string().required(),
+      price: joi.number().required().min(0),
+      image: joi.string().allow("", null),
+    })
+    .required(),
+});

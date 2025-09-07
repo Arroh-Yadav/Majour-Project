@@ -7,6 +7,7 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
+const { listingSchema } = require("./schema.js");
 
 app.use(methodOverride("_method"));
 app.set("view engine", "ejs");
@@ -28,6 +29,16 @@ async function main() {
 app.get("/", (req, res) => {
   res.send("Hi I'm root");
 });
+//validating for schema (middleware)
+const validateListing = (req, res, next) => {
+  let { error } = listingSchema.validate(req.body);
+  if (error) {
+    let errMsg = error.details.map((el) => el.message).join(",");
+    throw new ExpressError(400, errMsg);
+  } else {
+    next();
+  }
+};
 
 //Index Route
 app.get(
@@ -56,10 +67,8 @@ app.get(
 //Create Route
 app.post(
   "/Listings",
+  validateListing,
   wrapAsync(async (req, res, next) => {
-    if (!req.body.Listing) {
-      throw new ExpressError(400, "Send valid data for listing");
-    }
     const newListing = new Listing(req.body.Listing);
     await newListing.save();
     res.redirect("/Listings");
@@ -79,6 +88,7 @@ app.get(
 //Update Route
 app.put(
   "/listings/:id",
+  validateListing,
   wrapAsync(async (req, res) => {
     let { id } = req.params;
     await Listing.findByIdAndUpdate(id, { ...req.body.Listing });
@@ -110,6 +120,7 @@ app.delete(
 //   res.send("successful testing");
 // });
 
+//If any request made to the same domain but didn't match to any of our created then they'll see this.
 app.use((req, res, next) => {
   next(new ExpressError(404, "Page Not Found"));
 });
