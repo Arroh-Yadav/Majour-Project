@@ -32,19 +32,18 @@
           >
           <%=listing.description%></textarea
           >
-          <div class="invalid-feedback">Please enter a short description.</div>
+          <div class="invalid-feedback">Please enter a short description!</div>
         </div>
 
         <div class="mb-3">
-          <label for="image" class="form-label">Image url/Link</label>
+          <label for="image" class="form-label" required>Image url/Link</label>
           <input
             value="<%=listing.image%>"
             name="Listing[image]"
             type="text"
             class="form-control"
-            required
           />
-          <div class="invalid-feedback">Image url/Link should be valid!</div>
+          <div class="invalid-feedback">Please enter a valid link!</div>
         </div>
 
         <div class="row">
@@ -56,7 +55,7 @@
               class="form-control"
               required
             />
-            <div class="invalid-feedback">Price should be valid!</div>
+            <div class="invalid-feedback">Please enter a valid Price!</div>
           </div>
           <div class="mb-3 col-md-8">
             <label for="country" class="form-label">Country</label>

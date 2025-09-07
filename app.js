@@ -57,10 +57,7 @@ app.get(
 app.post(
   "/Listings",
   wrapAsync(async (req, res, next) => {
-    if (!req.body.listing) {
-      throw new ExpressError(400, "Send valid data for Listing");
-    }
-    const newListing = new Listing(req.body.listing);
+    const newListing = new Listing(req.body.Listing);
     await newListing.save();
     res.redirect("/Listings");
   })
@@ -80,9 +77,6 @@ app.get(
 app.put(
   "/listings/:id",
   wrapAsync(async (req, res) => {
-    if (!req.body.Listing) {
-      throw new ExpressError(400, "Send valid data for Listing");
-    }
     let { id } = req.params;
     await Listing.findByIdAndUpdate(id, { ...req.body.Listing });
     res.redirect(`/Listings/${id}`);
@@ -114,7 +108,7 @@ app.delete(
 // });
 
 app.use((req, res, next) => {
-  next(new ExpressError(404, "Page Not Found!"));
+  next(new ExpressError(404, "Page Not Found"));
 });
 
 app.use((err, req, res, next) => {
