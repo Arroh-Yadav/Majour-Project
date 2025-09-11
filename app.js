@@ -8,6 +8,7 @@ const ejsMate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
 const { listingSchema } = require("./schema.js");
+const Review = require("./models/reviews.js");
 
 app.use(methodOverride("_method"));
 app.set("view engine", "ejs");
@@ -42,7 +43,7 @@ const validateListing = (req, res, next) => {
 
 //Index Route
 app.get(
-  "/Listings",
+  "/listings",
   wrapAsync(async (req, res) => {
     const allListings = await Listing.find({});
     res.render("listings/index.ejs", { allListings });
@@ -66,12 +67,12 @@ app.get(
 
 //Create Route
 app.post(
-  "/Listings",
+  "/listings",
   validateListing,
   wrapAsync(async (req, res, next) => {
     const newListing = new Listing(req.body.Listing);
     await newListing.save();
-    res.redirect("/Listings");
+    res.redirect("/listings");
   })
 );
 
@@ -92,19 +93,33 @@ app.put(
   wrapAsync(async (req, res) => {
     let { id } = req.params;
     await Listing.findByIdAndUpdate(id, { ...req.body.Listing });
-    res.redirect(`/Listings/${id}`);
+    res.redirect(`/listings/${id}`);
   })
 );
 
 //Delete Route
 app.delete(
-  "/Listings/:id",
+  "/listings/:id",
   wrapAsync(async (req, res) => {
     let { id } = req.params;
     await Listing.findByIdAndDelete(id);
-    res.redirect("/Listings");
+    res.redirect("/listings");
   })
 );
+
+//reviews
+//post route
+app.post("/listings/:id/reviews", async (req, res) => {
+  let listing = await Listing.findById(req.params.id);
+  let newReview = new Review(req.body.review); //its same like above we created review as an object here
+
+  listing.reviews.push(newReview);
+
+  await newReview.save();
+  await listing.save();
+
+  res.redirect(`/listings/${listing._id}`);
+});
 
 // app.get("/testListing", async (req, res) => {
 //   let sampleListing = new Listing({
@@ -120,11 +135,12 @@ app.delete(
 //   res.send("successful testing");
 // });
 
-//If any request made to the same domain but didn't match to any of our created then they'll see this.
+//If any request made to the same domain but didn't match to any of our created request then they'll see this.
 app.use((req, res, next) => {
   next(new ExpressError(404, "Page Not Found"));
 });
 
+//error handler
 app.use((err, req, res, next) => {
   let { statusCode = 500, message = "Something went wrong!" } = err;
   res.status(statusCode).render("error.ejs", { message });
