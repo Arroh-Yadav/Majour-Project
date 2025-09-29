@@ -64,16 +64,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.get("/demouser", async (req, res) => {
-//   const fakeUser = new User({
-//     email: "student@gmail.com",
-//     username: "Delta-student",
-//   });
-
-//   let registeredUser = await User.register(fakeUser, "helloworld");
-//   res.send(registeredUser);
-// });
-
 //all the listings routes for listings and reviews are included here from [routes folder]
 app.use("/listings", listingsRouter);
 app.use("/listings/:id/reviews", reviewsRouter);
