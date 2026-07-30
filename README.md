@@ -44,15 +44,17 @@ package.json               # Dependencies (see engines: Node 22.18.0)
 - Mapbox account / access token (for geocoding)
 
 ## Environment variables
-Create a `.env` file in the project root with these variables:
+Create a `.env` file in the project root with these variables, or copy the provided `.env.example`:
 
-```
-ATLASDB_URL=<your-mongodb-connection-string>
-SECRET=<session-secret>
-MAP_TOKEN=<mapbox-access-token>
-CLOUDINARY_CLOUD_NAME=<cloudinary-cloud-name>
-CLOUDINARY_KEY=<cloudinary-api-key>
-CLOUDINARY_SECRET=<cloudinary-api-secret>
+```dotenv
+# Example .env - replace the placeholder values with your credentials
+CLOUD_NAME=your-cloudinary-cloud-name
+CLOUD_API_KEY=your-cloudinary-api-key
+CLOUD_API_SECRET=your-cloudinary-api-secret
+
+MAP_TOKEN=pk.your-mapbox-token
+ATLASDB_URL=mongodb+srv://<user>:<password>@cluster0.mongodb.net/majour?retryWrites=true&w=majority
+SECRET=your_session_secret_here
 ```
 
 Notes:
@@ -68,7 +70,7 @@ cd Majour-Project
 npm install
 ```
 
-2. Create `.env` (see Environment variables above)
+2. Create `.env` (see Environment variables above or copy `.env.example`)
 
 3. Start the app
 
@@ -132,6 +134,5 @@ Add a LICENSE file to state the project's license. Currently no license file is 
 ---
 
 If you'd like, I can now:
-- open a PR that adds a `README.md` (this commit already adds README to the default branch),
-- add a `.env.example` file and update package.json scripts, or
+- add a `.env.example` reference (already added) and update package.json scripts, or
 - create a Dockerfile and docker-compose for running MongoDB and the app locally. Let me know which you prefer.
