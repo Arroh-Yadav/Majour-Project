@@ -132,7 +132,3 @@ Contributions are welcome. If you plan to open a PR, please:
 Add a LICENSE file to state the project's license. Currently no license file is included in the repository.
 
 ---
-
-If you'd like, I can now:
-- add a `.env.example` reference (already added) and update package.json scripts, or
-- create a Dockerfile and docker-compose for running MongoDB and the app locally. Let me know which you prefer.
